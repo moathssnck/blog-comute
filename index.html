@@ -1,23 +1,855 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدونة الاتصالات - Communications Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8)), url('/placeholder.svg?height=400&width=1200') center/cover;
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* Articles */
+        .articles {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .article-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-excerpt {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: #764ba2;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .category-list, .tag-list {
+            list-style: none;
+        }
+
+        .category-list li, .tag-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .category-list a, .tag-list a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .category-list a:hover, .tag-list a:hover {
+            color: #667eea;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag-list a {
+            background: #f8f9fa;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .tag-list a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Policy Sections */
+        .policy-section {
+            background: #f8f9fa;
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+
+        .policy-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .policy-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .policy-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .policy-card ul {
+            list-style: none;
+            padding-right: 1rem;
+        }
+
+        .policy-card li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .policy-card li:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+
+        /* Security Roles Grid */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .security-role {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .security-role:hover {
+            transform: translateY(-5px);
+        }
+
+        .role-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .security-role h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .security-role ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .security-role li {
+            margin-bottom: 0.5rem;
+            padding-right: 1rem;
+            position: relative;
+        }
+
+        .security-role li:before {
+            content: "•";
+            color: #667eea;
+            position: absolute;
+            right: 0;
+        }
+
+        /* Security Measures */
+        .security-measures {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .security-measures h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .measures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .measure-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .measure-item h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .measure-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Security */
+        .contact-security {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .contact-security p {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .security-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .measures-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .policy-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">مدونة الاتصالات</a>
+                <nav>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#articles">المقالات</a></li>
+                        <li><a href="#technology">التكنولوجيا</a></li>
+                        <li><a href="#networks">الشبكات</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                        <li><a href="#privacy">سياسة الخصوصية</a></li>
+                        <li><a href="#security">أدوار الأمان</a></li>
+                    </ul>
+                </nav>
+                <button class="lang-toggle" onclick="toggleLanguage()">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>مرحباً بكم في مدونة الاتصالات</h1>
+            <p>اكتشف أحدث التطورات في عالم الاتصالات والتكنولوجيا الرقمية</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="main-content">
+            <main class="articles">
+                <h2 class="section-title">أحدث المقالات</h2>
+                
+                <article class="article-card">
+                    <img src="/placeholder.svg?height=200&width=400" alt="تقنية 5G" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">مستقبل شبكات الجيل الخامس 5G</h3>
+                        <div class="article-meta">نُشر في 15 يناير 2024 | بواسطة أحمد محمد</div>
+                        <p class="article-excerpt">
+                            تعرف على أحدث التطورات في تقنية الجيل الخامس وكيف ستغير طريقة تفاعلنا مع التكنولوجيا. من السرعات الفائقة إلى التطبيقات الذكية، اكتشف كيف ستشكل شبكات 5G مستقبل الاتصالات.
+                        </p>
+                        <a href="#" class="read-more">اقرأ المزيد ←</a>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <img src="/placeholder.svg?height=200&width=400" alt="إنترنت الأشياء" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">إنترنت الأشياء وثورة الأجهزة الذكية</h3>
+                        <div class="article-meta">نُشر في 12 يناير 2024 | بواسطة فاطمة علي</div>
+                        <p class="article-excerpt">
+                            استكشف عالم إنترنت الأشياء وكيف تتصل الأجهزة الذكية لتحسين حياتنا اليومية. من المنازل الذكية إلى المدن المتصلة، تعرف على التقنيات التي تشكل مستقبلنا الرقمي.
+                        </p>
+                        <a href="#" class="read-more">اقرأ المزيد ←</a>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <img src="/placeholder.svg?height=200&width=400" alt="الأمن السيبراني" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">الأمن السيبراني في عصر الاتصالات الرقمية</h3>
+                        <div class="article-meta">نُشر في 10 يناير 2024 | بواسطة محمد حسن</div>
+                        <p class="article-excerpt">
+                            تعلم كيفية حماية بياناتك وشبكاتك في عالم متزايد الاتصال. اكتشف أحدث تقنيات الأمان والحماية من التهديدات السيبرانية المتطورة.
+                        </p>
+                        <a href="#" class="read-more">اقرأ المزيد ←</a>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <img src="/placeholder.svg?height=200&width=400" alt="الذكاء الاصطناعي" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">الذكاء الاصطناعي في تطوير الاتصالات</h3>
+                        <div class="article-meta">نُشر في 8 يناير 2024 | بواسطة سارة أحمد</div>
+                        <p class="article-excerpt">
+                            كيف يساهم الذكاء الاصطناعي في تحسين شبكات الاتصالات وتطوير تجربة المستخدم. من التحليل التنبؤي إلى الصيانة الذكية للشبكات.
+                        </p>
+                        <a href="#" class="read-more">اقرأ المزيد ←</a>
+                    </div>
+                </article>
+            </main>
+
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3 class="widget-title">الفئات</h3>
+                    <ul class="category-list">
+                        <li><a href="#">شبكات الاتصال (15)</a></li>
+                        <li><a href="#">التكنولوجيا الحديثة (12)</a></li>
+                        <li><a href="#">الأمن السيبراني (8)</a></li>
+                        <li><a href="#">إنترنت الأشياء (10)</a></li>
+                        <li><a href="#">الذكاء الاصطناعي (6)</a></li>
+                        <li><a href="#">الهواتف الذكية (9)</a></li>
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3 class="widget-title">الكلمات المفتاحية</h3>
+                    <ul class="tag-list">
+                        <li><a href="#">5G</a></li>
+                        <li><a href="#">WiFi</a></li>
+                        <li><a href="#">IoT</a></li>
+                        <li><a href="#">الأمان</a></li>
+                        <li><a href="#">الشبكات</a></li>
+                        <li><a href="#">التطبيقات</a></li>
+                        <li><a href="#">البيانات</a></li>
+                        <li><a href="#">التشفير</a></li>
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3 class="widget-title">أحدث التعليقات</h3>
+                    <div style="color: #666; font-size: 0.9rem;">
+                        <p><strong>علي محمد:</strong> مقال رائع عن تقنية 5G...</p>
+                        <hr style="margin: 1rem 0; border: none; border-top: 1px solid #eee;">
+                        <p><strong>نور أحمد:</strong> شكراً لكم على المعلومات القيمة...</p>
+                        <hr style="margin: 1rem 0; border: none; border-top: 1px solid #eee;">
+                        <p><strong>محمد علي:</strong> هل يمكن إضافة المزيد عن الأمان؟</p>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <h3 class="widget-title">النشرة البريدية</h3>
+                    <p style="margin-bottom: 1rem; color: #666;">اشترك للحصول على أحدث المقالات</p>
+                    <form style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <input type="email" placeholder="بريدك الإلكتروني" style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                        <button type="submit" style="background: #667eea; color: white; border: none; padding: 0.5rem; border-radius: 5px; cursor: pointer;">اشتراك</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Section -->
+    <section id="privacy" class="policy-section">
+        <div class="container">
+            <div class="policy-content">
+                <h2 class="section-title">سياسة الخصوصية</h2>
+                
+                <div class="policy-card">
+                    <h3>جمع المعلومات</h3>
+                    <p>نحن نجمع المعلومات التي تقدمها لنا طوعياً عند:</p>
+                    <ul>
+                        <li>الاشتراك في النشرة البريدية</li>
+                        <li>ترك تعليق على المقالات</li>
+                        <li>التواصل معنا عبر نماذج الاتصال</li>
+                        <li>استخدام موقعنا الإلكتروني</li>
+                    </ul>
+                </div>
+
+                <div class="policy-card">
+                    <h3>استخدام المعلومات</h3>
+                    <p>نستخدم المعلومات المجمعة للأغراض التالية:</p>
+                    <ul>
+                        <li>تحسين تجربة المستخدم على الموقع</li>
+                        <li>إرسال النشرات البريدية والتحديثات</li>
+                        <li>الرد على استفساراتكم وتعليقاتكم</li>
+                        <li>تحليل استخدام الموقع لتطوير المحتوى</li>
+                    </ul>
+                </div>
+
+                <div class="policy-card">
+                    <h3>حماية البيانات</h3>
+                    <p>نحن ملتزمون بحماية معلوماتكم الشخصية من خلال:</p>
+                    <ul>
+                        <li>استخدام تقنيات التشفير المتقدمة</li>
+                        <li>تطبيق بروتوكولات الأمان الصارمة</li>
+                        <li>تقييد الوصول للبيانات للموظفين المخولين فقط</li>
+                        <li>عدم مشاركة البيانات مع أطراف ثالثة دون موافقتكم</li>
+                    </ul>
+                </div>
+
+                <div class="policy-card">
+                    <h3>ملفات تعريف الارتباط (Cookies)</h3>
+                    <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتكم على الموقع. يمكنكم التحكم في هذه الملفات من خلال إعدادات المتصفح.</p>
+                </div>
+
+                <div class="policy-card">
+                    <h3>حقوقكم</h3>
+                    <p>لديكم الحق في:</p>
+                    <ul>
+                        <li>الوصول إلى بياناتكم الشخصية</li>
+                        <li>تصحيح أو تحديث المعلومات</li>
+                        <li>حذف بياناتكم من قاعدة البيانات</li>
+                        <li>إلغاء الاشتراك في النشرة البريدية</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Roles Section -->
+    <section id="security" class="policy-section">
+        <div class="container">
+            <div class="policy-content">
+                <h2 class="section-title">أدوار الأمان والمسؤوليات</h2>
+                
+                <div class="security-grid">
+                    <div class="security-role">
+                        <div class="role-icon">🛡️</div>
+                        <h3>مدير الأمان</h3>
+                        <ul>
+                            <li>مراقبة أنظمة الأمان على مدار الساعة</li>
+                            <li>تطبيق سياسات الأمان والحماية</li>
+                            <li>إدارة صلاحيات المستخدمين</li>
+                            <li>التعامل مع الحوادث الأمنية</li>
+                        </ul>
+                    </div>
+
+                    <div class="security-role">
+                        <div class="role-icon">👨‍💻</div>
+                        <h3>مطور النظام</h3>
+                        <ul>
+                            <li>تطوير وصيانة أنظمة الأمان</li>
+                            <li>تطبيق التحديثات الأمنية</li>
+                            <li>مراجعة الكود للثغرات الأمنية</li>
+                            <li>تطوير أدوات الحماية المخصصة</li>
+                        </ul>
+                    </div>
+
+                    <div class="security-role">
+                        <div class="role-icon">📊</div>
+                        <h3>محلل الأمان</h3>
+                        <ul>
+                            <li>تحليل التهديدات والمخاطر</li>
+                            <li>مراقبة حركة البيانات</li>
+                            <li>إعداد تقارير الأمان الدورية</li>
+                            <li>تقييم فعالية الإجراءات الأمنية</li>
+                        </ul>
+                    </div>
+
+                    <div class="security-role">
+                        <div class="role-icon">👥</div>
+                        <h3>المستخدمون</h3>
+                        <ul>
+                            <li>استخدام كلمات مرور قوية</li>
+                            <li>عدم مشاركة معلومات الحساب</li>
+                            <li>الإبلاغ عن الأنشطة المشبوهة</li>
+                            <li>اتباع إرشادات الأمان المنشورة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="security-measures">
+                    <h3>إجراءات الأمان المطبقة</h3>
+                    <div class="measures-grid">
+                        <div class="measure-item">
+                            <h4>🔐 التشفير</h4>
+                            <p>جميع البيانات محمية بتشفير SSL/TLS 256-bit</p>
+                        </div>
+                        <div class="measure-item">
+                            <h4>🔍 المراقبة</h4>
+                            <p>مراقبة مستمرة للأنشطة والوصول للنظام</p>
+                        </div>
+                        <div class="measure-item">
+                            <h4>🛡️ جدار الحماية</h4>
+                            <p>حماية متقدمة ضد الهجمات السيبرانية</p>
+                        </div>
+                        <div class="measure-item">
+                            <h4>💾 النسخ الاحتياطي</h4>
+                            <p>نسخ احتياطية منتظمة لضمان استمرارية الخدمة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="policy-card">
+                    <h3>الإبلاغ عن المشاكل الأمنية</h3>
+                    <p>إذا اكتشفت أي مشكلة أمنية أو نشاط مشبوه، يرجى التواصل معنا فوراً على:</p>
+                    <div class="contact-security">
+                        <p><strong>البريد الإلكتروني:</strong> security@communicationsblog.com</p>
+                        <p><strong>الهاتف:</strong> +966-11-123-4567</p>
+                        <p><strong>وقت الاستجابة:</strong> خلال 24 ساعة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>حول المدونة</h3>
+                    <p>مدونة متخصصة في أحدث تطورات عالم الاتصالات والتكنولوجيا الرقمية</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <a href="#">الرئيسية</a>
+                    <a href="#">المقالات</a>
+                    <a href="#">من نحن</a>
+                    <a href="#">اتصل بنا</a>
+                </div>
+                <div class="footer-section">
+                    <h3>تابعنا</h3>
+                    <a href="#">فيسبوك</a>
+                    <a href="#">تويتر</a>
+                    <a href="#">لينكد إن</a>
+                    <a href="#">يوتيوب</a>
+                </div>
+            </div>
+            <p>&copy; 2024 مدونة الاتصالات. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleLanguage() {
+            const button = document.querySelector('.lang-toggle');
+            const isArabic = document.documentElement.lang === 'ar';
+            
+            if (isArabic) {
+                // Switch to English
+                document.documentElement.lang = 'en';
+                document.documentElement.dir = 'ltr';
+                button.textContent = 'AR';
+                
+                // Update main title
+                document.querySelector('.logo').textContent = 'Communications Blog';
+                document.querySelector('.hero h1').textContent = 'Welcome to Communications Blog';
+                document.querySelector('.hero p').textContent = 'Discover the latest developments in communications and digital technology';
+                
+                // Update navigation
+                const navLinks = document.querySelectorAll('nav a');
+                if (isArabic) {
+                    navLinks[0].textContent = 'Home';
+                    navLinks[1].textContent = 'Articles';
+                    navLinks[2].textContent = 'Technology';
+                    navLinks[3].textContent = 'Networks';
+                    navLinks[4].textContent = 'Contact';
+                    navLinks[5].textContent = 'Privacy Policy';
+                    navLinks[6].textContent = 'Security Roles';
+                } else {
+                    navLinks[0].textContent = 'الرئيسية';
+                    navLinks[1].textContent = 'المقالات';
+                    navLinks[2].textContent = 'التكنولوجيا';
+                    navLinks[3].textContent = 'الشبكات';
+                    navLinks[4].textContent = 'اتصل بنا';
+                    navLinks[5].textContent = 'سياسة الخصوصية';
+                    navLinks[6].textContent = 'أدوار الأمان';
+                }
+                
+            } else {
+                // Switch to Arabic
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+                button.textContent = 'EN';
+                
+                // Update main title
+                document.querySelector('.logo').textContent = 'مدونة الاتصالات';
+                document.querySelector('.hero h1').textContent = 'مرحباً بكم في مدونة الاتصالات';
+                document.querySelector('.hero p').textContent = 'اكتشف أحدث التطورات في عالم الاتصالات والتكنولوجيا الرقمية';
+                
+                // Update navigation
+                const navLinks = document.querySelectorAll('nav a');
+                if (isArabic) {
+                    navLinks[0].textContent = 'Home';
+                    navLinks[1].textContent = 'Articles';
+                    navLinks[2].textContent = 'Technology';
+                    navLinks[3].textContent = 'Networks';
+                    navLinks[4].textContent = 'Contact';
+                    navLinks[5].textContent = 'Privacy Policy';
+                    navLinks[6].textContent = 'Security Roles';
+                } else {
+                    navLinks[0].textContent = 'الرئيسية';
+                    navLinks[1].textContent = 'المقالات';
+                    navLinks[2].textContent = 'التكنولوجيا';
+                    navLinks[3].textContent = 'الشبكات';
+                    navLinks[4].textContent = 'اتصل بنا';
+                    navLinks[5].textContent = 'سياسة الخصوصية';
+                    navLinks[6].textContent = 'أدوار الأمان';
+                }
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Newsletter form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            if (email) {
+                alert('شكراً لك! تم تسجيل اشتراكك بنجاح.');
+                this.reset();
+            }
+        });
+    </script>
+</body>
 </html>
